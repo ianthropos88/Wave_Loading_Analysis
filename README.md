@@ -342,7 +342,7 @@ We can modify the model to run a loop testing scenario with the number of orders
 - The syntax after MEASURE defines a measure, which can be consumed in any other expression of the same query.
 - A query measure overrides a model measure with the same name. However, its definition is only used in other query measures; other model measures continue to use the model measure definition.
 
-- You can find the example DAX Queries used for this project in the folder's:
+- You can find the example DAX Queries used for this project in the folder:
 [wave_loading_analysis/dax_solution_measures_examples.txt](https://github.com/ianthropos88/wave_loading_analysis/blob/main/dax_solution_measures_examples.txt)
 - You can find DAX Overview in the folder:
 [wave_loading_analysis/DAX_World/DAX_Overview.pdf](https://github.com/ianthropos88/wave_loading_analysis/blob/main/DAX_World/DAX%20Overview.pdf)
@@ -357,7 +357,7 @@ With the HTML Text_Styler, you can define the scroll direction, speed, number of
 
 On top of that, the statement can be designed to work for other objects so you can also let an image move across your screen.
 
-- You can find the example HTML Text_Styler used for this project in the folder's:
+- You can find the example HTML Text_Styler used for this project in the folder:
 [wave_loading_analysis/html_text_styler_solution_code.txt](https://github.com/ianthropos88/wave_loading_analysis/blob/main/html_text_styler_solution_code.txt)
 
 
