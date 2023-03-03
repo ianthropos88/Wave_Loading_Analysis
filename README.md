@@ -186,12 +186,12 @@ To build a web site that shows data from a database, you will need:
 - To use HTML / CSS to style the page
 
 **You can find the PostgreSQL Queries used for this project in the folder's:**
-- [Distribution Table](https://git.syngentaaws.org/partho_choudhury/control-tower/-/blob/main/supply_delivery_document.sql)
-- [Production Table](https://git.syngentaaws.org/partho_choudhury/control-tower/-/blob/main/supply_production.sql)
-- [Stock Movement](https://git.syngentaaws.org/partho_choudhury/control-tower/-/blob/main/supply_stock_movement.sql)
-- [Current Inventory](https://git.syngentaaws.org/partho_choudhury/control-tower/-/blob/main/current_inventory.sql)
-- [Transportation Order](https://git.syngentaaws.org/partho_choudhury/control-tower/-/blob/main/supply_transportation_order.sql)
-- [Available Supply](https://git.syngentaaws.org/partho_choudhury/control-tower/-/blob/main/available_supply.sql)
+- [Distribution Table](https://github.com/ianthropos88/wave_loading_analysis/blob/main/supply_delivery_logistics.sql)
+- [Production Table](https://github.com/ianthropos88/wave_loading_analysis/blob/main/supply_production.sql)
+- [Stock Movement](https://github.com/ianthropos88/wave_loading_analysis/blob/main/supply_stock_movement.sql)
+- [Current Inventory](https://github.com/ianthropos88/wave_loading_analysis/blob/main/current_inventory.sql)
+- [Transportation Order](https://github.com/ianthropos88/wave_loading_analysis/blob/main/supply_transportation_order.sql)
+- [Available Supply](https://github.com/ianthropos88/wave_loading_analysis/blob/main/available_supply.sql)
 
 
 ### **SQL Mind Mapping for Advanced Data Analytics !**
