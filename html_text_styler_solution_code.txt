@@ -1,0 +1,42 @@
+SELECTED Direction = MIN(Direction[ID])
+Speed Value = SELECTEDVALUE('Speed'[Speed], 20)
+
+HTML Text_Styler:
+
+Moving text (Supply Loaded & Adherence) = 
+
+VAR var_country1_change = [Margin Delivered (Country_1)]
+
+VAR var_country1 = "[Supply Loaded & Adherence: Current Season] ----> Country_1: "&
+FORMAT([Total Units Loaded Present Season (Country_1)],"0,0.00")&" "& 
+IF(var_country1_change >= 0,
+    "<span style=color:green;>▲ "&FORMAT(var_country1_change,"0.00%")&"</span>",
+    "<span style=color:red;>▼ "&FORMAT(var_country1_change,"0.00%")&"</span>")
+
+VAR var_country2_change = [Margin Delivered (Country_2)]
+
+VAR var_country2 = "Country_2: "&
+FORMAT([Total Units Loaded Present Season (Country_2)],"0,0.00")&" "&
+IF(var_country2_change >= 0,
+    "<span style=color:green;>▲ "&FORMAT(var_country2_change,"0.00%")&"</span>",
+    "<span style=color:red;>▼ "&FORMAT(var_country2_change,"0.00%")&"</span>")
+
+VAR var_country3_change = [Margin Delivered (Country_3)]
+
+VAR var_country3 = "Country_3: "&
+FORMAT([Total Units Loaded Present Season (Country_3)],"0,0.00")&" "&
+IF(var_country3_change >= 0,
+    "<span style=color:green;>▲ "&FORMAT(var_country3_change,"0.00%")&"</span>",
+    "<span style=color:red;>▼ "&FORMAT(var_country3_change,"0.00%")&"</span>")
+
+VAR var_country4_change = [Margin Delivered (Country_4)]
+
+VAR var_country4 = "Country_4: "&
+FORMAT([Total Units Loaded Present Season (Country_4)],"0,0.00")&" "&
+IF(var_country4_change >= 0,
+    "<span style=color:green;>▲ "&FORMAT(var_country4_change,"0.00%")&"</span>",
+    "<span style=color:red;>▼ "&FORMAT(var_country4_change,"0.00%")&"</span>")
+
+RETURN
+"<marquee behavior='scroll' direction='"&Direction[SELECTED Direction]&"' scrollamount='"&Speed[Speed Value]/3&"'>"&
+var_country1 & "      " & var_country2 & "      " & var_country3 & "      " & var_country4
