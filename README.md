@@ -336,7 +336,7 @@ As the computation time can increase exponentially with the size of the dataset 
 
 We can modify the model to run a loop testing scenario with the number of orders per wave varying between planned scenario and the executed scenario.
 
-##### **Comment 3:** START CALCULATION
+##### **Comment 3:** Start Calculation
 
 - The MEASURE keyword introduces a measure definition (DEFINE) in a query (also known as query measure).
 - The syntax after MEASURE defines a measure, which can be consumed in any other expression of the same query.
@@ -346,6 +346,18 @@ We can modify the model to run a loop testing scenario with the number of orders
 [control-tower/DAX_solution_measures__Examples_.txt](https://git.syngentaaws.org/partho_choudhury/control-tower/-/blob/main/DAX_solution_measures__Examples_.txt)
 - You can find more advance DAX measures format in the folder:
 [control-tower/DAX_World/DAX_World.xlsx](https://git.syngentaaws.org/partho_choudhury/control-tower/-/blob/main/DAX_World/DAX_World.xlsx)
+
+##### **Comment 4:** Moving Text
+
+Up until now, elements in Power BI Reports didn't move. In most cases, this is perfectly fine. But sometimes you might want to add a moving text or image to get the user's attention. This can be done with the help of the HTML Text_Styler.
+
+With the HTML Text_Styler, you can define the scroll direction, speed, number of times the text should move over the screen, and many other settings. Of course, you still have full flexibility when it comes to formatting.
+
+On top of that, the statement can be designed to work for other objects so you can also let an image move across your screen.
+
+- You can find the example HTML Text_Styler used for this project in the folder's:
+[control-tower/DAX_solution_measures__Examples_.txt](https://git.syngentaaws.org/partho_choudhury/control-tower/-/blob/main/html_text_styler_solution_code.txt)
+
 
 ### **Final Results**
 <p align="center">
