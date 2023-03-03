@@ -1,10 +1,10 @@
 # Improve Business Decision Making Capabilities using Advanced Analytics/Business Intelligence with PostgreSQL and DAX 📈
-This is a project based on the recent issues faced by Syngenta Seeds EAME to deliver the products to Russia and Ukraine, and due to the increasing tensions and the change of the regulations, the deliveries to Belarus and Kazakhstan, too. The purpose of this project is set to achieve the real time tracking of the Planned Supply vs the Ongoing Loading as per the plan and the Production Required for the supply with "Treat & Pack" adherence.
+This is a project based on the issues faced by the Company to deliver the products to Country_1 and Country_2, and due to the increasing tensions and the change of the regulations, the deliveries to Country_3 and Country_4, too. The purpose of this project is set to achieve the real time tracking of the Planned Supply vs the Ongoing Loading as per the plan and the Production Required for the supply with "Treat & Pack" adherence.
 
 
 ## > :rocket: **Thank you for your interest in my work.** :blush:
 
-This solution aims at developing a realtime tracker with extra smart visuals for tracking the Plan VS Execution scenario, for "Russia", "Ukraine", "Kazakhstan" and "Belarus".
+This solution aims at developing a realtime tracker with extra smart visuals for tracking the Plan VS Execution scenario, for "Country_1", "Country_2", "Country_3" and "Country_4".
 
 It leverages rich and diverse priors encapsulated with pretrained **PostgreSQL Queries** ----> **DAX** (e.g., DAX Measures) for **ETL**.
 
@@ -59,7 +59,7 @@ _Data visualization and data discovery are the most critical elements of your Bu
 
 ## My Solution 💡
 
-In this Power BI End Project, I have investigated multiple dataset's for Syngenta Seeds EAME called **DROPLETS** and analyzed their churn rates. This business case helps to understand, why we are not able to deliver products to the customers, what are the obligations, and how we are handling the uncertanities.
+In this Power BI End Project, I have investigated multiple dataset's for the Company called **DROPLETS** and analyzed their churn rates. This business case helps to understand, why we are not able to deliver products to the customers, what are the obligations, and how we are handling the uncertanities.
 
 
 
@@ -107,7 +107,7 @@ In this Power BI End Project, I have investigated multiple dataset's for Syngent
 
 # Load the Data with ODBC ⚖
 
-Because the resources provided by AWS cloud for Microsoft are limited, I would suggest to load the data with ODBC.
+Because the company database system is managed by AWS and the resources provided by AWS cloud for Microsoft are limited, I would suggest to load the data with ODBC.
 
 **Capabilities Supported**
 - Import
@@ -117,13 +117,13 @@ Because the resources provided by AWS cloud for Microsoft are limited, I would s
         SQL statement
         Supported row reduction clauses
 
-- >   **Server:** rs-db-prod-copy.smartmart.syngentaaws.org
-- >   **Port:** 5439
-- >   **Database:** mio
+- >   **Server:** console.server_schema.(company_name)aws.org
+- >   **Port:** ****
+- >   **Database:** ****
 
 **ODBC Connection String**
 _64 Bit_
-- >   Driver={Amazon Redshift (x64)}; Server=rs-db-prod-copy.smartmart.syngentaaws.org; Port=5439; Database= mio
+- >   Driver={Amazon Redshift (x64)}; Server=console.server_schema.(company_name)aws.org; Port=****; Database= ****
 
 #### **Known issues and limitations**
 
@@ -305,7 +305,7 @@ Ideally, relationships can either be one-to-many or many-to-one. Power BI is exc
   <img align="center" src="image/static/production_table.PNG" width=100%>
   
 </p>
-<p align="center"><b>Test 1:</b> 'RU', 'UA', 'KZ' & 'BY' Order Lines alligned with Seasonal Line Production.</p>
+<p align="center"><b>Test 1:</b> 'Country_1', 'Country_2', 'Country_3' & 'Country_4' Order Lines alligned with Seasonal Line Production.</p>
 
 - **Best Performance:** Production for the Season Alligned with the Supply Requirements/Alligned with KPI's: >=95% "Green", >=90% && <95% "Yellow"
 , and <90% "Red"
@@ -313,15 +313,15 @@ Ideally, relationships can either be one-to-many or many-to-one. Power BI is exc
 - **Current Inventory based of the Inventory Report Date:** Availability of the Inventory Data for the latest report date is alligned.
 
 **Next Steps:**
-To estimate the impact of wave loading strategy on our supply productivity, we will run several simulations with a gradual number of orders per wave:
+To estimate the impact of wave loading strategy on the supply productivity, we will run several simulations with a gradual number of orders per wave:
 1. Evaluate the Production KPI based on Customer Needs and Divert the Flow based on Predictions: How much is required more to fulfill the next allignment, what is required?
 2. Record Picking Route per Wave: Recording the sequence of locations per route for further analysis based on advance predictions.
 
 # **Use the application** 🖥️ 
-> This app has been deployed, you need to have the access provided by the owner/admin to view it on Power BI Cloud/Service.
+> This app has been deployed internally.
 
 #### **Why should you use it?** 
-> This Power BI Cloud/Service Application has been designed for **EAME Seeds P&S Business Leadership Team** to help them simulate the impact of data optimization in analyzing the Supply Plan Execution with the Distribution and Production.
+> This Power BI Cloud/Service Application has been designed for **Regional Business Leadership Team** to help them simulate the impact of data optimization in analyzing the Supply Plan Execution with the Distribution and Production.
 
 #### **Load the data**
 
