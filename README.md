@@ -186,12 +186,12 @@ To build a web site that shows data from a database, you will need:
 - To use HTML / CSS to style the page
 
 **You can find the PostgreSQL Queries used for this project in the folder's:**
-- [Distribution Table](https://github.com/ianthropos88/wave_loading_analysis/blob/main/supply_delivery_logistics.sql)
-- [Production Table](https://github.com/ianthropos88/wave_loading_analysis/blob/main/supply_production.sql)
-- [Stock Movement](https://github.com/ianthropos88/wave_loading_analysis/blob/main/supply_stock_movement.sql)
-- [Current Inventory](https://github.com/ianthropos88/wave_loading_analysis/blob/main/current_inventory.sql)
-- [Transportation Order](https://github.com/ianthropos88/wave_loading_analysis/blob/main/supply_transportation_order.sql)
-- [Available Supply](https://github.com/ianthropos88/wave_loading_analysis/blob/main/available_supply.sql)
+- [Distribution Table](https://github.com/ianthropos88/wave_loading_analysis/blob/main/PostgreSQL/Distribution.sql)
+- [Production Table](https://github.com/ianthropos88/wave_loading_analysis/blob/main/PostgreSQL/Production.sql)
+- [Stock Movement](https://github.com/ianthropos88/wave_loading_analysis/blob/main/PostgreSQL/StockMovement.sql)
+- [Current Inventory](https://github.com/ianthropos88/wave_loading_analysis/blob/main/PostgreSQL/Inventory.sql)
+- [Transportation Order](https://github.com/ianthropos88/wave_loading_analysis/blob/main/PostgreSQL/TransportationOrder.sql)
+- [Available Supply](https://github.com/ianthropos88/wave_loading_analysis/blob/main/PostgreSQL/Supply.sql)
 
 
 ### **SQL Mind Mapping for Advanced Data Analytics !**
