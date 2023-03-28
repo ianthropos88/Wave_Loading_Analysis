@@ -720,7 +720,7 @@ LEFT JOIN
 						AND division IN ('01','A','B','Z','E') 
                         OR (division IN ('99')
                         AND material_type = 'VERP')
-						AND material_group ilike 'COM%'
+						AND material_group ILIKE 'COM%'
 )
 						AND d.actual_quantity_delivered_in_base_uom <> 0
 						AND d.source_system_cde = 'FNDG'
