@@ -395,8 +395,7 @@ LEFT JOIN
 
 			WHERE date_part(year, actual_end_date) >= '2022'
 
-						AND pof.process_order_type_cid IN ('FNDGZP01','FNDGZP02','FNDGZP03','FNDGZP04','FNDGZP05','FNDGZP06',
-						'FNDGZP07','FNDGZP08','FNDGZP09','FNDGZP10','FNDGZP11','FNDGZP12','FNDGZP13')
+						AND pof.process_order_type_cid IN ('F01','FNP02','FN03','FN04')
 						AND pof.record_type = 'item'
 						AND db_delete_flag = 'false'
 						AND db_current_status = 'true'
