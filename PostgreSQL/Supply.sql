@@ -35,25 +35,6 @@ SELECT
 	sa.designated_countries,
 	SUM(sa.quantity_in_reporting_uom) AS quantity_in_reporting_uom,
 	SUM(sa.available_quantity_for_planning_in_reporting_uom) AS available_quantity_for_planning_in_reporting_uom,
-	SUM(sa.qa_loss_qty_in_reporting_uom) AS qa_loss_qty_in_reporting_uom,
-	SUM(sa.future_cleaning_loss_in_reporting_uom) AS future_cleaning_loss_in_reporting_uom,
-	SUM(sa.future_process_loss_in_reporting_uom) AS future_process_loss_in_reporting_uom,
-	SUM(sa.net_qty_after_loss_and_process_simulation) AS net_qty_after_loss_and_process_simulation,
-	SUM(sa.qa_loss_qty) AS qa_loss_qty,
-	SUM(sa.future_process_loss) AS future_process_loss,
-	SUM(sa.future_cleaning_loss) AS future_cleaning_loss,
-	SUM(sa.at_risk_quantity) AS at_risk_quantity,
-	SUM(sa.repair_loss) AS repair_loss,
-	SUM(sa.quantity) AS quantity,
-	SUM(sa.quantity_received_or_quantity_required) AS quantity_received_or_quantity_required,
-	SUM(sa.valuated_unrestricted_use_stock) AS valuated_unrestricted_use_stock,
-	SUM(sa.stock_in_transfer_sloc_to_sloc) AS stock_in_transfer_sloc_to_sloc,
-	SUM(sa.stock_in_quality_inspection) AS stock_in_quality_inspection,
-	SUM(sa.total_stock_of_all_restricted_batches) AS total_stock_of_all_restricted_batches,
-	SUM(sa.blocked_stock) AS blocked_stock,
-	SUM(sa.blocked_stock_returns) AS blocked_stock_returns,
-	SUM(sa.stock_in_transit) AS stock_in_transit,
-	SUM(sa.stock_in_transfer) AS stock_in_transfer,
 	sa.reporting_uom,
 	sa.availability_date,
 	date_part(year, sa.availability_date) AS availability_year,
@@ -132,6 +113,5 @@ WHERE sa.availability_date >= GETDATE()
 	AND m.material_group IN ('COM500','COM700') 
 	AND m.species IN ('Prod_1','Prod_2')
 	AND b.designated_country_cde IN ('Country_1','Country_2','Country_3','Country_4')
-	GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,55,
-	56,62,63,64,65,66,67
+	GROUP BY 1,2,3,4
 	ORDER BY quantity_in_reporting_uom DESC;
