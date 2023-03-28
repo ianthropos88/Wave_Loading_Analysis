@@ -98,6 +98,7 @@ SELECT
     d.shipping_point,
     d.plant_id,
     RIGHT(d.storage_location_cid,4) AS storage_location,
+--- SUBSTRING(d.storage_location_cid, 5, LENGTH(d.storage_location_cid)) AS storage_location_id
     d.delivery_block_header,
     d.picking_date,
     d.actual_quantity_delivered_in_base_uom,
@@ -215,7 +216,7 @@ LEFT JOIN
                             base_uom
 			FROM public.db_material 
 			WHERE record_type = 'Seeds' 
-						AND division IN ('01','3A','3B','7A','7B') 
+						AND division IN ('01','A','B','Z','E') 
                         OR (division IN ('99')
                         AND material_type = 'VERP')
 						AND material_group like 'COM%'
@@ -624,7 +625,7 @@ LEFT JOIN
 							material_id 
             FROM public.db02_material 
             WHERE record_type = 'Seeds' 
-						AND division IN ('01','3A','3B','7A','7B') 
+						AND division IN ('01','A','B','Z','E') 
                         OR (division IN ('99')
                         AND material_type = 'VERP')
 						AND material_group like 'COM%'
@@ -653,7 +654,7 @@ LEFT JOIN
                             receiving_site_driver_name
 
 			FROM public.db007_shipment_fact
----			WHERE shipment_id IN ('HSK0485454','319011','T079.113503' ) 
+---			WHERE shipment_id IN ('H485454','3111','T503' ) 
 ---						AND shipment_source IN ('Delivery','DELIVERY')
 ---						AND date_part(y, acp_milestone_date_time) >= '2022'
 ---						AND date_part(mon, acp_milestone_date_time) >= '09'
@@ -672,7 +673,7 @@ LEFT JOIN
                             country_of_destination
 
 			FROM public.db007_shipment
----			WHERE shipment_id IN ('HSK0485454','319011','T079.113503' ) 
+---			WHERE shipment_id IN ('H454','3111','T503' ) 
 ---						AND shipment_source IN ('Delivery','DELIVERY')
 ---						AND date_part(y, acp_milestone_date_time) >= '2022'
 ---						AND date_part(mon, acp_milestone_date_time) >= '09'
@@ -716,7 +717,7 @@ LEFT JOIN
 							material_id 
 			FROM public.db02_material 
 			WHERE record_type = 'Seeds' 
-						AND division IN ('01','3A','3B','7A','7B') 
+						AND division IN ('01','A','B','Z','E') 
                         OR (division IN ('99')
                         AND material_type = 'VERP')
 						AND material_group like 'COM%'
