@@ -30,16 +30,6 @@ SELECT
 	i.stock_category,
 	i.inventory_type,
 	SUM(i.inventory_quantity) AS inventory_quantity,
-	SUM(i.unrestricted_use_quantity) AS unrestricted_use_quantity,
-	SUM(i.restricted_use_quantity) AS restricted_use_quantity,
-	SUM(i.blocked_quantity) AS blocked_quantity,
-	SUM(i.quality_inspection_quantity) AS quality_inspection_quantity,
-	SUM(i.in_transfer_quantity) AS in_transfer_quantity,
-	SUM(i.in_transit_quantity) AS in_transit_quantity,
-	SUM(i.valuated_goods_receipt_blocked_quantity) AS valuated_goods_receipt_blocked_quantity,
-	SUM(i.consumption_quantity) AS consumption_quantity,
-	SUM(i.restricted_use_quantity) AS restricted_use_quantity,
-	SUM(i.returned_quantity) AS returned_quantity,
 	i.inventory_uom,
 	i.db_version_valid_from,
 	i.db_version_valid_to
@@ -118,5 +108,5 @@ LEFT JOIN (
 	AND m.identifier_type LIKE '%materialnumber%'
 	AND m.record_type = 'Seeds'
 	AND b.designated_country_cde IN ('Country_1','Country_2','Country_3','Country_4')
-	GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,37,38,39
+	GROUP BY 1,2,3
 	ORDER BY inventory_quantity DESC;
