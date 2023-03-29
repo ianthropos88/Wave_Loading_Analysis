@@ -98,7 +98,7 @@ SELECT
     d.shipping_point,
     d.plant_id,
     RIGHT(d.storage_location_cid,4) AS storage_location,
---- SUBSTRING(d.storage_location_cid, 5, LENGTH(d.storage_location_cid)) AS storage_location_id
+--- SUBSTRING(d.storage_location_cid, 5, LENGTH(d.storage_location_cid)) AS storage_location_id,
     d.delivery_block_header,
     d.picking_date,
     d.actual_quantity_delivered_in_base_uom,
