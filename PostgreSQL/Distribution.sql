@@ -25,8 +25,56 @@ SELECT
     m.division,
     m.division_description,
     m.description,
+
+CASE
+	WHEN mm.species = 'CRNF' THEN 'Corn'
+	WHEN mm.species = 'SUNF' THEN 'Sunflower'
+	WHEN mm.species = 'WOSR' THEN 'Winter Oilseed Rape'
+	ELSE '<no_data>'
+	END AS crop,
+
+	CASE
+	WHEN mm.species = 'CRNF' OR mm.grouping ILIKE '%BLD%' OR mm.grouping_description ILIKE '%Blended%' THEN 'Blended'
+	WHEN mm.species = 'CRNF' OR mm.grouping ILIKE '%MED%' OR mm.grouping_description ILIKE '%Medium yield%' THEN 'Medium Yield'
+	WHEN mm.species = 'CRNF' OR mm.grouping ILIKE '%HIG%' OR mm.grouping_description ILIKE '%High yield%' THEN 'High Yield'
+	WHEN mm.species = 'CRNF' OR mm.grouping ILIKE '%LOW%' OR mm.grouping_description ILIKE '%Low yield%' THEN 'Low Yield'
+	WHEN mm.species = 'CRNF' OR mm.grouping ILIKE '%CRN%' OR mm.grouping_description ILIKE '%NORMAL%' THEN 'Normal'
+	WHEN mm.species = 'CRNF' OR mm.grouping ILIKE '%EPV%' OR mm.grouping_description ILIKE '%Epivio%' THEN 'Epivio'
+	WHEN mm.species = 'CRNF' OR mm.grouping ILIKE '%SAC%' OR mm.grouping_description ILIKE '%Saca Acabada Process%' THEN 'Saca Acabada Process'
+	WHEN mm.species = 'SUNF' OR mm.grouping ILIKE '%PRO%' OR mm.grouping_description ILIKE '%Pro%' THEN 'Pro'
+	WHEN mm.species = 'SUNF' OR mm.grouping ILIKE '%ORG%' OR mm.grouping_description ILIKE '%Organic%' THEN 'Organic'
+	WHEN mm.species = 'SUNF' OR mm.grouping ILIKE '%GLD%' OR mm.grouping_description ILIKE '%Gold%' THEN 'Gold'
+	WHEN mm.species = 'WOSR' THEN 'Winter Oilseed Rape'
+	ELSE '<no_data>'
+	END AS breed,
+	
     m.material_group,
     m.material_group_description,
+
+	mp.plant_id AS specific_plant_id,
+	mp.procurement_type,
+
+	CASE
+	WHEN mp.procurement_type = 'F' THEN 'Transferred'
+	WHEN mp.procurement_type = 'E' THEN 'In-House Production'
+	WHEN mp.procurement_type = 'X' THEN 'Description Under Review / Thank you for Patience'
+	ELSE 'Others'
+	END AS procurement_type_description,
+
+	mp.plant_specific_material_status,
+
+	CASE
+	WHEN mp.plant_specific_material_status = 'DM' THEN 'Material Deleted/Never Used'
+	WHEN mp.plant_specific_material_status = 'TB' THEN 'Material Fully Retired'
+	WHEN mp.plant_specific_material_status = 'RP' THEN 'Retirement : In Progress/All transactions are blocked'
+	WHEN mp.plant_specific_material_status = 'RT' THEN 'Retirement : In progress with no stock but still open orders/All transactions are blocked except those for closing operational elements'
+	WHEN mp.plant_specific_material_status = 'RB' THEN 'Retirement : In progress with orders closed but stock remains/All transactions are blocked except those for inventory removal'
+	WHEN mp.plant_specific_material_status = 'RA' THEN 'Retirement : Set for retirement analysis/All transactions are blocked'
+	WHEN mp.plant_specific_material_status = 'WF' THEN 'Material is currently being created/modified'
+	WHEN mp.plant_specific_material_status IS NULL THEN 'Active'
+	ELSE 'Description Under Review / Thank you for Patience'
+	END AS plant_specific_material_status_description,
+	
     m.quantity_of_package,
     m.quantity_of_package_uom,
     m.base_uom,
@@ -219,10 +267,23 @@ LEFT JOIN
 						AND division IN ('01','A','B','Z','E') 
                         OR (division IN ('99')
                         AND material_type = 'VERP')
-						AND material_group like 'COM%'
-                        AND identifier_type LIKE '%materialnumber%'
-                        AND preferred_id = 'true'
+						AND material_group ILIKE 'COM%'
+                        AND identifier_type ILIKE '%materialnumber%'
+                        AND preferred_id IS true
 ) m ON m.material_id = d.material_id
+
+--- Material Plant Attributes
+LEFT JOIN 
+(
+			SELECT DISTINCT
+							material_id,
+							plant_id, 
+							procurement_type, 
+							plant_specific_material_status
+			FROM public.mio02_material_plant
+			WHERE record_type = 'material_plant' 
+						AND source_system_cde = 'FNDG'
+) mp ON mp.material_id = sa.material_id
 
 --- Purchase Order and Sales Order Document Type Attributes
 LEFT JOIN 
@@ -260,7 +321,7 @@ LEFT JOIN
 							system_goods_receipt_date
 			FROM public.db119_batch
 			WHERE source_system_cde = 'FNDG'
-						AND db_current_status = 'true' 
+						AND db_current_status IS true 
 ) bt ON bt.batch_cid = d.batch_number_cid
 
 --- Batch Number Attributes
@@ -272,7 +333,7 @@ LEFT JOIN
 			FROM public.db119_batch_quality 
 			WHERE batch_quality_characteristic_cde_cid = 'FNDG894'
 						AND source_system_cde = 'FNDG'
-						AND db_current_status = 'true' 
+						AND db_current_status IS true 
 ) batch_number ON batch_number.batch_cid = d.batch_number_cid
 
 --- Batch Quality Status Attributes
@@ -284,7 +345,7 @@ LEFT JOIN
 			FROM public.db119_batch_quality 
 			WHERE batch_quality_characteristic_cde_cid = 'FNDG897'
 						AND source_system_cde = 'FNDG'
-						AND db_current_status = 'true' 
+						AND db_current_status IS true 
 ) quality_status ON quality_status.batch_cid = d.batch_number_cid 
 
 --- Batch Quality Class Attributes
@@ -296,7 +357,7 @@ LEFT JOIN
 			FROM public.db119_batch_quality 
 			WHERE batch_quality_characteristic_cde_cid = 'FNDG906'
 						AND source_system_cde = 'FNDG'
-						AND db_current_status = 'true' 
+						AND db_current_status IS true 
 ) quality_class ON quality_class.batch_cid = d.batch_number_cid 
 
 --- Batch Supply Status Attributes
@@ -308,7 +369,7 @@ LEFT JOIN
 			FROM public.db119_batch_quality 
 			WHERE batch_quality_characteristic_cde_cid = 'FNDG903'
 						AND source_system_cde = 'FNDG'
-						AND db_current_status = 'true' 
+						AND db_current_status IS true 
 ) supply_status ON supply_status.batch_cid = d.batch_number_cid
 
 --- Batch Certification Status Attributes
@@ -320,7 +381,7 @@ LEFT JOIN
 			FROM public.db119_batch_quality 
 			WHERE batch_quality_characteristic_cde_cid = 'FNDG1445'
 						AND source_system_cde = 'FNDG'
-						AND db_current_status = 'true' 
+						AND db_current_status IS true 
 ) certification_status ON certification_status.batch_cid = d.batch_number_cid
 
 --- Batch Certification Type Attributes
@@ -332,7 +393,7 @@ LEFT JOIN
 			FROM public.db119_batch_quality 
 			WHERE batch_quality_characteristic_cde_cid = 'FNDG869'
 						AND source_system_cde = 'FNDG'
-						AND db_current_status = 'true' 
+						AND db_current_status IS true 
 ) certification_type ON certification_type.batch_cid = d.batch_number_cid
 
 --- Batch OIC Status Attributes
@@ -344,7 +405,7 @@ LEFT JOIN
 			FROM public.db119_batch_quality 
 			WHERE batch_quality_characteristic_cde_cid = 'FNDG1583'
 						AND source_system_cde = 'FNDG'
-						AND db_current_status = 'true' 
+						AND db_current_status IS true 
 ) oic_status ON oic_status.batch_cid = d.batch_number_cid
 
 --- Batch Harvest Year Attributes
@@ -356,7 +417,7 @@ LEFT JOIN
 			FROM public.db119_batch_quality 
 			WHERE batch_quality_characteristic_cde_cid = 'FNDG898'
 						AND source_system_cde = 'FNDG'
-						AND db_current_status = 'true' 
+						AND db_current_status IS true 
 ) harvest_year ON harvest_year.batch_cid = d.batch_number_cid
 
 --- Batch Packing Plant Attributes
@@ -368,7 +429,7 @@ LEFT JOIN
 			FROM public.db119_batch_quality 
 			WHERE batch_quality_characteristic_cde_cid = 'FNDG913'
 						AND source_system_cde = 'FNDG'
-						AND db_current_status = 'true' 
+						AND db_current_status IS true 
 ) packing_plant ON packing_plant.batch_cid = d.batch_number_cid
 
 --- Batch Process Plant Attributes
@@ -380,7 +441,7 @@ LEFT JOIN
 			FROM public.db119_batch_quality 
 			WHERE batch_quality_characteristic_cde_cid = 'FNDG923'
 						AND source_system_cde = 'FNDG'
-						AND db_current_status = 'true' 
+						AND db_current_status IS true 
 ) process_plant ON process_plant.batch_cid = d.batch_number_cid
 
 --- Batch Treatment Plant Attributes
@@ -392,7 +453,7 @@ LEFT JOIN
 			FROM public.db119_batch_quality 
 			WHERE batch_quality_characteristic_cde_cid = 'FNDG928'
 						AND source_system_cde = 'FNDG'
-						AND db_current_status = 'true' 
+						AND db_current_status IS true 
 ) treatment_plant ON treatment_plant.batch_cid = d.batch_number_cid
 
 --- Batch Sizing Accuracy Attributes
@@ -404,7 +465,7 @@ LEFT JOIN
 			FROM public.db119_batch_quality 
 			WHERE batch_quality_characteristic_cde_cid = 'FNDG3346'
 						AND source_system_cde = 'FNDG'
-						AND db_current_status = 'true' 
+						AND db_current_status IS true 
 ) sizing_accuracy ON sizing_accuracy.batch_cid = d.batch_number_cid
 
 --- Batch Internal Lot Number Attributes
@@ -416,7 +477,7 @@ LEFT JOIN
 			FROM public.db119_batch_quality 
 			WHERE batch_quality_characteristic_cde_cid = 'FNDG907'
 						AND source_system_cde = 'FNDG'
-						AND db_current_status = 'true' 
+						AND db_current_status IS true 
 ) internal_lot_number ON internal_lot_number.batch_cid = d.batch_number_cid
 
 --- Batch Official Number Attributes
@@ -428,7 +489,7 @@ LEFT JOIN
 			FROM public.db119_batch_quality 
 			WHERE batch_quality_characteristic_cde_cid = 'FNDG912'
 						AND source_system_cde = 'FNDG'
-						AND db_current_status = 'true' 
+						AND db_current_status IS true 
 ) official_number ON official_number.batch_cid = d.batch_number_cid
 
 --- Batch Germination Final Count Attributes
@@ -440,7 +501,7 @@ LEFT JOIN
 			FROM public.db119_batch_quality 
 			WHERE batch_quality_characteristic_cde_cid = 'FNDG914'
 						AND source_system_cde = 'FNDG'
-						AND db_current_status = 'true' 
+						AND db_current_status IS true 
 ) germination_final_count ON germination_final_count.batch_cid = d.batch_number_cid
 
 
@@ -454,7 +515,7 @@ LEFT JOIN
 			FROM public.db119_batch_quality 
 			WHERE batch_quality_characteristic_cde_cid = 'FNDG926'
 						AND source_system_cde = 'FNDG'
-						AND db_current_status = 'true' 
+						AND db_current_status IS true 
 ) batch_caliber ON batch_caliber.batch_cid = d.batch_number_cid
 
 --- Batch Visual Appearance Rating Attributes
@@ -466,7 +527,7 @@ LEFT JOIN
 			FROM public.db119_batch_quality 
 			WHERE batch_quality_characteristic_cde_cid = 'FNDG1393'
 						AND source_system_cde = 'FNDG'
-						AND db_current_status = 'true' 
+						AND db_current_status IS true 
 ) visual_appearance_rating ON visual_appearance_rating.batch_cid = d.batch_number_cid
 
 --- Batch Phyto Certificate Number Attributes
@@ -478,7 +539,7 @@ LEFT JOIN
 			FROM public.db119_batch_quality 
 			WHERE batch_quality_characteristic_cde_cid = 'FNDG1032'
 						AND source_system_cde = 'FNDG'
-						AND db_current_status = 'true' 
+						AND db_current_status IS true 
 ) phyto_certificate_number ON phyto_certificate_number.batch_cid = d.batch_number_cid
 
 --- Batch Field MLultiplication Certification Attributes
@@ -490,7 +551,7 @@ LEFT JOIN
 			FROM public.db119_batch_quality 
 			WHERE batch_quality_characteristic_cde_cid = 'FNDG2736'
 						AND source_system_cde = 'FNDG'
-						AND db_current_status = 'true' 
+						AND db_current_status IS true 
 ) field_multiplication_certification ON field_multiplication_certification.batch_cid = d.batch_number_cid
 
 --- Conversion Factor for base_uom to KS Attributes 
@@ -508,8 +569,8 @@ LEFT JOIN
 							material_guid, 
 							material_id 
             FROM public.db02_material 
-            WHERE preferred_id = 'true'
-						AND identifier_type LIKE '%materialnumber%'
+            WHERE preferred_id IS true
+						AND identifier_type ILIKE '%materialnumber%'
 						AND record_type = 'Seeds'
 ) mm1 ON mm1.material_guid = mma_ks.material_guid
 			WHERE mma_ks.alt_uom = 'KS' 
@@ -531,8 +592,8 @@ LEFT JOIN
 							material_guid, 
 							material_id 
         	FROM public.db02_material 
-            WHERE preferred_id = 'true' 
-						AND identifier_type LIKE '%materialnumber%'
+            WHERE preferred_id IS true 
+						AND identifier_type ILIKE '%materialnumber%'
 						AND record_type = 'Seeds'
 ) mm1 ON mm1.material_guid = mma_kg.material_guid
 			WHERE mma_kg.alt_uom = 'KG' 
@@ -556,7 +617,7 @@ LEFT JOIN
             FROM public.db134_delivery_fact 
             WHERE record_type = 'item'
 						AND source_system_cde = 'FNDG'
-                        AND item_deleted_ind = 'false'
+                        AND item_deleted_ind IS false
 )) gm ON gm.batch_cid = d.batch_number_cid
 
 --- Business Partner Attributes
@@ -576,7 +637,7 @@ LEFT JOIN
             FROM public.db134_delivery_fact 
             WHERE source_system_cde = 'FNDG'
                         AND record_type = 'item'
-                        AND item_deleted_ind = 'false'
+                        AND item_deleted_ind IS false
                 		AND date_part(year, created_date) >= '2020'
 )) bp ON bp.bp_cid = d.ship_to_bp_cid	
 
@@ -589,8 +650,8 @@ LEFT JOIN
                             source_system_cde,
                             customer_bp_cid
             FROM public.db54_storage_location 
-            WHERE mio_delete_ind = 'false'
-            AND db_current_status = 'true'
+            WHERE mio_delete_ind IS false
+            AND db_current_status IS true
             AND source_system_cde = 'FNDG'
             AND customer_bp_cid IN 
 (
@@ -599,7 +660,7 @@ LEFT JOIN
             FROM public.db134_delivery_fact 
             WHERE source_system_cde = 'FNDG'
                         AND record_type = 'item'
-                        AND item_deleted_ind = 'false'
+                        AND item_deleted_ind IS false
                 		AND date_part(year, created_date) >= '2020'
 )) sl ON sl.customer_bp_cid = d.ship_to_bp_cid
 
@@ -628,7 +689,7 @@ LEFT JOIN
 						AND division IN ('01','A','B','Z','E') 
                         OR (division IN ('99')
                         AND material_type = 'VERP')
-						AND material_group like 'COM%'
+						AND material_group ILIKE 'COM%'
 )) tr ON tr.item_material_id = m.material_id
 
 ---  Shipment Delivery Attributes
@@ -726,7 +787,7 @@ LEFT JOIN
 						AND d.source_system_cde = 'FNDG'
                         AND d.record_type = 'item'
 						AND d.loading_date >= '2022-09-01'
-						AND d.item_deleted_ind = 'false'
+						AND d.item_deleted_ind IS false
 						AND m.species IN ('Product_2','Product_1')
 						AND m.material_group IN ('COM700')
 						AND bp.country_code IN ('Country_1','Country_2','Country_3','Country_4')
