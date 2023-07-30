@@ -47,7 +47,7 @@ LEFT JOIN
 			FROM public.db_batch_quality 
 			WHERE batch_quality_characteristic_cde_cid = 'FNDG894'
 						AND source_system_cde = 'FNDG'
-						AND db_current_status = 'true' 
+						AND db_current_status IS true 
 ) batch_number ON batch_number.batch_cid = b.batch_cid
 
 --- batch quality status
@@ -59,7 +59,7 @@ LEFT JOIN
 			FROM public.db_batch_quality 
 			WHERE batch_quality_characteristic_cde_cid = 'FNDG897'
 						AND source_system_cde = 'FNDG'
-						AND db_current_status = 'true' 
+						AND db_current_status IS true 
 ) quality_status ON quality_status.batch_cid = b.batch_cid 
 
 --- batch quality class
@@ -71,7 +71,7 @@ LEFT JOIN
 			FROM public.db_batch_quality 
 			WHERE batch_quality_characteristic_cde_cid = 'FNDG906'
 						AND source_system_cde = 'FNDG'
-						AND db_current_status = 'true' 
+						AND db_current_status IS true 
 ) quality_class ON quality_class.batch_cid = b.batch_cid 
 
 --- batch supply status
@@ -83,7 +83,7 @@ LEFT JOIN
 			FROM public.db_batch_quality 
 			WHERE batch_quality_characteristic_cde_cid = 'FNDG903'
 						AND source_system_cde = 'FNDG'
-						AND db_current_status = 'true' 
+						AND db_current_status IS true 
 ) supply_status ON supply_status.batch_cid = b.batch_cid
 
 --- batch certification status
@@ -95,7 +95,7 @@ LEFT JOIN
 			FROM public.db_batch_quality 
 			WHERE batch_quality_characteristic_cde_cid = 'FNDG1445'
 						AND source_system_cde = 'FNDG'
-						AND db_current_status = 'true' 
+						AND db_current_status IS true 
 ) certification_status ON certification_status.batch_cid = b.batch_cid
 
 --- batch certification type
@@ -107,7 +107,7 @@ LEFT JOIN
 			FROM public.db_batch_quality 
 			WHERE batch_quality_characteristic_cde_cid = 'FNDG869'
 						AND source_system_cde = 'FNDG'
-						AND db_current_status = 'true' 
+						AND db_current_status IS true 
 ) certification_type ON certification_type.batch_cid = b.batch_cid
 
 --- batch oic status
@@ -119,7 +119,7 @@ LEFT JOIN
 			FROM public.db_batch_quality 
 			WHERE batch_quality_characteristic_cde_cid = 'FNDG1583'
 						AND source_system_cde = 'FNDG'
-						AND db_current_status = 'true' 
+						AND db_current_status IS true 
 ) oic_status ON oic_status.batch_cid = b.batch_cid
 
 --- batch harvest year
@@ -131,7 +131,7 @@ LEFT JOIN
 			FROM public.db_batch_quality 
 			WHERE batch_quality_characteristic_cde_cid = 'FNDG898'
 						AND source_system_cde = 'FNDG'
-						AND db_current_status = 'true' 
+						AND db_current_status IS true 
 ) harvest_year ON harvest_year.batch_cid = b.batch_cid
 
 --- batch packing plant
@@ -143,7 +143,7 @@ LEFT JOIN
 			FROM public.db_batch_quality 
 			WHERE batch_quality_characteristic_cde_cid = 'FNDG913'
 						AND source_system_cde = 'FNDG'
-						AND db_current_status = 'true' 
+						AND db_current_status IS true 
 ) packing_plant ON packing_plant.batch_cid = b.batch_cid
 
 --- batch process plant
@@ -155,7 +155,7 @@ LEFT JOIN
 			FROM public.db_batch_quality 
 			WHERE batch_quality_characteristic_cde_cid = 'FNDG923'
 						AND source_system_cde = 'FNDG'
-						AND db_current_status = 'true' 
+						AND db_current_status IS true 
 ) process_plant ON process_plant.batch_cid = b.batch_cid
 
 --- batch treatment plant
@@ -167,7 +167,7 @@ LEFT JOIN
 			FROM public.db_batch_quality 
 			WHERE batch_quality_characteristic_cde_cid = 'FNDG928'
 						AND source_system_cde = 'FNDG'
-						AND db_current_status = 'true' 
+						AND db_current_status IS true 
 ) treatment_plant ON treatment_plant.batch_cid = b.batch_cid
 
 --- batch sizing accuracy
@@ -179,7 +179,7 @@ LEFT JOIN
 			FROM public.db_batch_quality 
 			WHERE batch_quality_characteristic_cde_cid = 'FNDG3346'
 						AND source_system_cde = 'FNDG'
-						AND db_current_status = 'true' 
+						AND db_current_status IS true 
 ) sizing_accuracy ON sizing_accuracy.batch_cid = b.batch_cid
 
 --- batch internal lot number
@@ -191,7 +191,7 @@ LEFT JOIN
 			FROM public.db_batch_quality 
 			WHERE batch_quality_characteristic_cde_cid = 'FNDG907'
 						AND source_system_cde = 'FNDG'
-						AND db_current_status = 'true' 
+						AND db_current_status IS true 
 ) internal_lot_number ON internal_lot_number.batch_cid = b.batch_cid
 
 --- batch official number
@@ -203,7 +203,7 @@ LEFT JOIN
 			FROM public.db_batch_quality 
 			WHERE batch_quality_characteristic_cde_cid = 'FNDG912'
 						AND source_system_cde = 'FNDG'
-						AND db_current_status = 'true' 
+						AND db_current_status IS true 
 ) official_number ON official_number.batch_cid = b.batch_cid
 
 --- batch germination final count
@@ -215,7 +215,7 @@ LEFT JOIN
 			FROM public.db_batch_quality 
 			WHERE batch_quality_characteristic_cde_cid = 'FNDG914'
 						AND source_system_cde = 'FNDG'
-						AND db_current_status = 'true' 
+						AND db_current_status IS true 
 ) germination_final_count ON germination_final_count.batch_cid = b.batch_cid
 
 
@@ -229,7 +229,7 @@ LEFT JOIN
 			FROM public.db_batch_quality 
 			WHERE batch_quality_characteristic_cde_cid = 'FNDG926'
 						AND source_system_cde = 'FNDG'
-						AND db_current_status = 'true' 
+						AND db_current_status IS true 
 ) batch_caliber ON batch_caliber.batch_cid = b.batch_cid
 
 --- batch visual appearance rating
@@ -241,7 +241,7 @@ LEFT JOIN
 			FROM public.db_batch_quality 
 			WHERE batch_quality_characteristic_cde_cid = 'FNDG1393'
 						AND source_system_cde = 'FNDG'
-						AND db_current_status = 'true' 
+						AND db_current_status IS true 
 ) visual_appearance_rating ON visual_appearance_rating.batch_cid = b.batch_cid
 
 --- batch phyto certificate number
@@ -253,7 +253,7 @@ LEFT JOIN
 			FROM public.db_batch_quality 
 			WHERE batch_quality_characteristic_cde_cid = 'FNDG1032'
 						AND source_system_cde = 'FNDG'
-						AND db_current_status = 'true' 
+						AND db_current_status IS true 
 ) phyto_certificate_number ON phyto_certificate_number.batch_cid = b.batch_cid
 
 --- batch field multiplication certification
@@ -265,7 +265,7 @@ LEFT JOIN
 			FROM public.db_batch_quality 
 			WHERE batch_quality_characteristic_cde_cid = 'FNDG2736'
 						AND source_system_cde = 'FNDG'
-						AND db_current_status = 'true' 
+						AND db_current_status IS true 
 ) field_multiplication_certification ON field_multiplication_certification.batch_cid = b.batch_cid
 
 WHERE b.batch_deleted_ind = 'false' 
