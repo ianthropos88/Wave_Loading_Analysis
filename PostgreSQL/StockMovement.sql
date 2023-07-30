@@ -82,8 +82,8 @@ LEFT JOIN (
 				species
 			FROM public.db02_material 
 			WHERE record_type = 'Seeds' 
-				AND identifier_type LIKE '%materialnumber%'
-				AND preferred_id = 'true'
+				AND identifier_type ILIKE '%materialnumber%'
+				AND preferred_id IS true
 			) m ON m.material_id = sm.material_id
 
 
@@ -100,7 +100,7 @@ LEFT JOIN (
 				system_goods_receipt_date
 			FROM public.db119_batch
 			WHERE source_system_cde = 'FNDG'
-				AND db_current_status = 'true'
+				AND db_current_status IS true
 		   ) b ON b.batch_cid = sm.batch_cid
 
 
