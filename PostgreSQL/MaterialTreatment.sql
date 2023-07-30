@@ -72,8 +72,8 @@ SELECT
 			FROM public.db_material 
 			WHERE record_type = 'Seeds' 
 
-						AND identifier_type LIKE '%materialnumber%'
-						AND preferred_id = 'true'
-                        AND is_active = 'true'
+						AND identifier_type ILIKE '%materialnumber%'
+						AND preferred_id IS true
+                        AND is_active IS true
                         AND date_part(year, material_create_date) >= '2015'
                         AND species IN ('Product_1','Product_2','Product_3','Product_4','Product_5');
