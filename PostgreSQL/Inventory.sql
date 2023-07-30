@@ -54,9 +54,9 @@ LEFT JOIN (
 			FROM public.db_material 
 			WHERE record_type = 'Seeds'
 ---				AND material_type = 'ZSTK' 
-				AND identifier_type LIKE '%materialnumber%'
+				AND identifier_type ILIKE '%materialnumber%'
 				AND variety_number IS NOT NULL
-				AND preferred_id = 'true'
+				AND preferred_id IS true
 			) m ON m.material_id = i.material_id
 
 
@@ -92,7 +92,7 @@ LEFT JOIN (
 				system_goods_receipt_date
 			FROM public.db_batch
 			WHERE source_system_cde = 'FNDG'
-				AND db_current_status = 'true' 
+				AND db_current_status IS true 
 		   ) b ON b.batch_cid = i.batch_cid
 
 	
@@ -105,7 +105,7 @@ LEFT JOIN (
 	AND i.inventory_type = 'company_inventory'
 	AND m.material_group IN ('COM700') 
 	AND m.species IN ('Product_1','Product_2')
-	AND m.identifier_type LIKE '%materialnumber%'
+	AND m.identifier_type ILIKE '%materialnumber%'
 	AND m.record_type = 'Seeds'
 	AND b.designated_country_cde IN ('Country_1','Country_2','Country_3','Country_4')
 	GROUP BY 1,2,3
