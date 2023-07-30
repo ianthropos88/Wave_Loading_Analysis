@@ -3,8 +3,56 @@ SELECT
 	sa.master_profile,
 	sa.material_id,
 	m.description, 
+
+CASE
+	WHEN mm.species = 'CRNF' THEN 'Corn'
+	WHEN mm.species = 'SUNF' THEN 'Sunflower'
+	WHEN mm.species = 'WOSR' THEN 'Winter Oilseed Rape'
+	ELSE '<no_data>'
+	END AS crop,
+
+	CASE
+	WHEN mm.species = 'CRNF' OR mm.grouping ILIKE '%BLD%' OR mm.grouping_description ILIKE '%Blended%' THEN 'Blended'
+	WHEN mm.species = 'CRNF' OR mm.grouping ILIKE '%MED%' OR mm.grouping_description ILIKE '%Medium yield%' THEN 'Medium Yield'
+	WHEN mm.species = 'CRNF' OR mm.grouping ILIKE '%HIG%' OR mm.grouping_description ILIKE '%High yield%' THEN 'High Yield'
+	WHEN mm.species = 'CRNF' OR mm.grouping ILIKE '%LOW%' OR mm.grouping_description ILIKE '%Low yield%' THEN 'Low Yield'
+	WHEN mm.species = 'CRNF' OR mm.grouping ILIKE '%CRN%' OR mm.grouping_description ILIKE '%NORMAL%' THEN 'Normal'
+	WHEN mm.species = 'CRNF' OR mm.grouping ILIKE '%EPV%' OR mm.grouping_description ILIKE '%Epivio%' THEN 'Epivio'
+	WHEN mm.species = 'CRNF' OR mm.grouping ILIKE '%SAC%' OR mm.grouping_description ILIKE '%Saca Acabada Process%' THEN 'Saca Acabada Process'
+	WHEN mm.species = 'SUNF' OR mm.grouping ILIKE '%PRO%' OR mm.grouping_description ILIKE '%Pro%' THEN 'Pro'
+	WHEN mm.species = 'SUNF' OR mm.grouping ILIKE '%ORG%' OR mm.grouping_description ILIKE '%Organic%' THEN 'Organic'
+	WHEN mm.species = 'SUNF' OR mm.grouping ILIKE '%GLD%' OR mm.grouping_description ILIKE '%Gold%' THEN 'Gold'
+	WHEN mm.species = 'WOSR' THEN 'Winter Oilseed Rape'
+	ELSE '<no_data>'
+	END AS breed,
+	
 	m.material_group,
 	m.material_group_description, 
+
+	mp.plant_id AS specific_plant_id,
+	mp.procurement_type,
+
+	CASE
+	WHEN mp.procurement_type = 'F' THEN 'Transferred'
+	WHEN mp.procurement_type = 'E' THEN 'In-House Production'
+	WHEN mp.procurement_type = 'X' THEN 'Description Under Review / Thank you for Patience'
+	ELSE 'Others'
+	END AS procurement_type_description,
+
+	mp.plant_specific_material_status,
+
+	CASE
+	WHEN mp.plant_specific_material_status = 'DM' THEN 'Material Deleted/Never Used'
+	WHEN mp.plant_specific_material_status = 'TB' THEN 'Material Fully Retired'
+	WHEN mp.plant_specific_material_status = 'RP' THEN 'Retirement : In Progress/All transactions are blocked'
+	WHEN mp.plant_specific_material_status = 'RT' THEN 'Retirement : In progress with no stock but still open orders/All transactions are blocked except those for closing operational elements'
+	WHEN mp.plant_specific_material_status = 'RB' THEN 'Retirement : In progress with orders closed but stock remains/All transactions are blocked except those for inventory removal'
+	WHEN mp.plant_specific_material_status = 'RA' THEN 'Retirement : Set for retirement analysis/All transactions are blocked'
+	WHEN mp.plant_specific_material_status = 'WF' THEN 'Material is currently being created/modified'
+	WHEN mp.plant_specific_material_status IS NULL THEN 'Active'
+	ELSE 'Description Under Review / Thank you for Patience'
+	END AS plant_specific_material_status_description,
+	
 	m.variety_name,
 	sa.plant_id,
 	sa.record_number,
@@ -67,10 +115,23 @@ LEFT JOIN (
 			FROM public.db_material 
 			WHERE record_type = 'Seeds'
 ---				AND material_type = 'ZSTK' 
-				AND identifier_type LIKE '%materialnumber%'
+				AND identifier_type ILIKE '%materialnumber%'
 				AND variety_number IS NOT NULL
-				AND preferred_id = 'true'
+				AND preferred_id IS true
 			) m ON m.material_id = sa.material_id
+
+	--- Material Plant Attributes
+LEFT JOIN 
+(
+			SELECT DISTINCT
+							material_id,
+							plant_id, 
+							procurement_type, 
+							plant_specific_material_status
+			FROM public.mio02_material_plant
+			WHERE record_type = 'material_plant' 
+						AND source_system_cde = 'FNDG'
+) mp ON mp.material_id = sa.material_id
 
 -- batch quality status
 LEFT JOIN (
@@ -103,7 +164,7 @@ LEFT JOIN (
 				system_goods_receipt_date
 			FROM public.db_batch
 			WHERE source_system_cde = 'FNDG'
-				AND db_current_status = 'true' 
+				AND db_current_status IS true 
 		   ) b ON b.batch_cid = sa.batch_cid
 		
 WHERE sa.availability_date >= GETDATE()
