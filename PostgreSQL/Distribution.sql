@@ -10,7 +10,10 @@ Dataset -  provides the following details:
 
 Who and What– who are the delivery partners, what is the type of delivery,  which material,  batch, quantities, delivery conditions, etc.
 When and Where – What dates - for delivery, goods issue/receipt, picking, packing, etc and which plants, Shipping/receiving points.
-GDPR Implementation: Personal identifiable attributes in this MIO are encrypted due to GDPR compliance requirements.
+GDPR Implementation: Personal identifiable attributes in this database are encrypted due to GDPR compliance requirements.
+
+Note: This is a replication of the Original Codes, due to Corporate Data Privacy, and it does not relate to any objects currently effecting such nature.
+
 
 */
 
